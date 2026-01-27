@@ -3740,6 +3740,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1399956908362813626, guid: 4dd944dd3ee80984481d2d60b568304d, type: 3}
+      propertyPath: dashUnlocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6625933641491656056, guid: 4dd944dd3ee80984481d2d60b568304d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

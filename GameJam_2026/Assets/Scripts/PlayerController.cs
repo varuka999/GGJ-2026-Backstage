@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         {            
             Vector2 point = transform.position + (dashDistance*animatorDirection);
             point += box.offset;
-            Vector2 hitboxSize = box.size;
+            Vector2 hitboxSize = box.size - new Vector2(0.05f,0.05f);
             if(!Physics2D.OverlapBox(point,hitboxSize,0.0f))
             {
                 //start dash
