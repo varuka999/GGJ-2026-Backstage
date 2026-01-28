@@ -4,23 +4,41 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum MaskType
+{
+    None,
+    Ghost,
+    Detective,
+}
+
 public class PlayerController : MonoBehaviour
 {
+    //input
     private PlayerInput input = null;
     private InputAction moveAction = null;
     private InputAction interactAction = null;
-    private InputAction dashAction = null;
+    private InputAction abilityAction = null;
+    private InputAction cycleMaskAction = null;
+
+
     [SerializeField] float moveSpeed = 8.0f;
+
+    //components
     private Rigidbody2D rb = null;
     private Animator animator = null;
     private BoxCollider2D box = null;
 
+
     private Vector3 animatorDirection = Vector2.down;
     private List<Interactible> interactibles = new List<Interactible>();
-    [SerializeField] private bool detectiveUnlocked = false;
+
+    private List<MaskType> ownedMasks = new List<MaskType>();
+    private int currentMaskIndex = 0;
+
+    //detective mode stuff
+    [SerializeField] private bool inDetectiveMode = false;
 
     //ghost dash stuff
-    [SerializeField] private bool dashUnlocked = false;
     [SerializeField] float dashDistance = 3.5f;
     [SerializeField] float dashSpeed = 12.0f;
     private Vector3 dashDestination = new Vector3(0, 0, -1);
@@ -32,7 +50,8 @@ public class PlayerController : MonoBehaviour
         input = new PlayerInput();
         moveAction = input.Player.Move;
         interactAction = input.Player.Interact;
-        dashAction = input.Player.Dash;
+        abilityAction = input.Player.Ability;
+        cycleMaskAction = input.Player.CycleMask;
 
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
@@ -41,7 +60,13 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Y", 0);
         animator.SetBool("isMoving", false);
         interactAction.performed += OnInteract;
-        dashAction.performed += OnDash;
+        abilityAction.performed += OnAbility;
+        cycleMaskAction.performed += OnCycleMask;
+        ownedMasks.Add(MaskType.None);
+
+        //just for testing
+        ObtainMask(MaskType.Ghost);
+        ObtainMask(MaskType.Detective);
     }
 
     void OnEnable()
@@ -49,7 +74,8 @@ public class PlayerController : MonoBehaviour
         input.Enable();
         moveAction.Enable();
         interactAction.Enable();
-        dashAction.Enable();
+        abilityAction.Enable();
+        cycleMaskAction.Enable();
     }
 
     void OnDisable()
@@ -57,7 +83,8 @@ public class PlayerController : MonoBehaviour
         input.Disable();
         moveAction.Disable();
         interactAction.Disable();
-        dashAction.Disable();
+        abilityAction.Disable();
+        cycleMaskAction.Disable();
     }
 
     // Update is called once per frame
@@ -73,6 +100,12 @@ public class PlayerController : MonoBehaviour
                 dashDestination = new Vector3(0, 0, -1);
                 rb.simulated = true;
             }
+        }
+        else if (inDetectiveMode)
+        {
+            //Detective code
+            rb.linearVelocity = Vector2.zero;
+
         }
         else
         {
@@ -152,16 +185,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     public bool IsDashing()
     {
         return !(dashDestination.z == -1);
     }
 
-
-    void OnDash(InputAction.CallbackContext context)
+    void OnAbility(InputAction.CallbackContext context)
     {
-        if (dashUnlocked && !IsDashing())
+        if (GetCurrentMask() == MaskType.Ghost && !IsDashing())
         {
             Vector2 point = transform.position + (dashDistance * animatorDirection);
             point += box.offset;
@@ -182,5 +213,40 @@ public class PlayerController : MonoBehaviour
                 //destination is not valid
             }
         }
+        else if (GetCurrentMask() == MaskType.Detective)
+        {
+            inDetectiveMode = !inDetectiveMode;
+            if (inDetectiveMode)
+            {
+                //Enter detective mode code
+            }
+            else
+            {
+                //Exit detective mode code
+            }
+        }
+    }
+
+    MaskType GetCurrentMask()
+    {
+        return ownedMasks[currentMaskIndex];
+    }
+
+    void ObtainMask(MaskType mask)
+    {
+        if (ownedMasks[0] == MaskType.None)
+        {
+            ownedMasks[0] = mask;
+        }
+        else
+        {
+            ownedMasks.Add(mask);
+        }
+    }
+
+    void OnCycleMask(InputAction.CallbackContext context)
+    {
+        currentMaskIndex = (currentMaskIndex + 1) % ownedMasks.Count;
+        Debug.Log(GetCurrentMask());
     }
 }
