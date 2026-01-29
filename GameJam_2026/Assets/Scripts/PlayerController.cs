@@ -194,13 +194,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (GetCurrentMask() == MaskType.Detective)
         {
-            inDetectiveMode = !inDetectiveMode;
-            ChangeDetectiveMode(inDetectiveMode);
+            ChangeDetectiveMode(!inDetectiveMode);
         }
     }
 
     void ChangeDetectiveMode(bool mode)
     {
+        inDetectiveMode = mode;
         GameManager.Instance.SetDetectiveView(mode);
     }
 
