@@ -221,15 +221,13 @@ public class PlayerController : MonoBehaviour
         else if (GetCurrentMask() == MaskType.Detective)
         {
             inDetectiveMode = !inDetectiveMode;
-            if (inDetectiveMode)
-            {
-                //Enter detective mode code
-            }
-            else
-            {
-                //Exit detective mode code
-            }
+            ChangeDetectiveMode(inDetectiveMode);
         }
+    }
+
+    void ChangeDetectiveMode(bool mode)
+    {
+        GameManager.Instance.SetDetectiveView(mode);
     }
 
     MaskType GetCurrentMask()
@@ -253,7 +251,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsDashing())
         {
-            inDetectiveMode = false;
+            ChangeDetectiveMode(false);
             currentMaskIndex = (currentMaskIndex + 1) % ownedMasks.Count;
             Debug.Log(GetCurrentMask());
         }
