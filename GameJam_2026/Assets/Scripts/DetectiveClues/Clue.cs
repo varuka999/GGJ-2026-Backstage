@@ -21,9 +21,13 @@ public abstract class Clue : MonoBehaviour
     protected virtual void Awake()
     {
         GetComponent<SpriteRenderer>().material = Resources.Load<Material>("MasterShader");
-        SetActive(active);
         sprite = GetComponent<Renderer>();
         hitbox = GetComponent<Collider2D>();
+    }
+
+    protected virtual void Start()
+    {
+        SetActive(active);
     }
 
     // Update is called once per frame
