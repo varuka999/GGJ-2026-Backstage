@@ -11,6 +11,8 @@ public abstract class Clue : MonoBehaviour
 
     bool visibleHighlight = false;
 
+    [SerializeField] string textWhenClicked = "";
+
     [SerializeField] protected bool visibleOutsideDetective = true;
 
     [SerializeField] bool hideAfterInteract = false;
@@ -21,9 +23,13 @@ public abstract class Clue : MonoBehaviour
     protected virtual void Awake()
     {
         GetComponent<SpriteRenderer>().material = Resources.Load<Material>("MasterShader");
-        SetActive(active);
         sprite = GetComponent<Renderer>();
         hitbox = GetComponent<Collider2D>();
+    }
+
+    protected virtual void Start()
+    {
+        SetActive(active);
     }
 
     // Update is called once per frame
@@ -99,6 +105,16 @@ public abstract class Clue : MonoBehaviour
             material = GameManager.Instance.GetMaterial();
             GetComponent<SpriteRenderer>().material = material;
         }
+    }
+
+    public virtual void StartInteract()
+    {
+        if (textWhenClicked != "")
+        {
+            //Show text with UI
+            Debug.Log(textWhenClicked);
+        }
+        OnInteract();
     }
 
     public abstract void OnInteract();
