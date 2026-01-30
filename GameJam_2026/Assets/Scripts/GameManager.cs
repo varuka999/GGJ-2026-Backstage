@@ -5,11 +5,14 @@ public class GameManager : MonoBehaviour
     static GameManager instance = null;
     static public GameManager Instance {get {return instance;}}
 
+    [SerializeField] private GameObject cinemachinePrefab = null;
+    [SerializeField] private GameObject playerPrefab = null;
+    [SerializeField] private Transform playerSpawnTransform = null;
+
     bool detectiveView = false;
 
     Material material = null;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         if (instance == null)
@@ -17,6 +20,11 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         material = new Material(Resources.Load<Material>("MasterShader"));
+
+        // Player & Camera Setup
+        GameObject player = Instantiate(playerPrefab, playerSpawnTransform.position, Quaternion.identity);
+        player.SetActive(false);
+        player.GetComponent<PlayerController>().Initialize(cinemachinePrefab);
     }
 
     public bool GetDetectiveView()
