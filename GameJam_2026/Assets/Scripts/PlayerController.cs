@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashSpeed = 12.0f;
     private Vector3 dashDestination = new Vector3(0, 0, -1);
 
-    private bool isAnimating = false;
+
     public void Initialize(GameObject cinemachinePrefab)
     {
         input = new PlayerInput();
@@ -98,11 +98,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAnimating) // will stop movement during animations
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
 
         if (IsDashing())
         {
@@ -229,12 +224,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsDashing())
         {
-            
             ChangeDetectiveMode(false);
             currentMaskIndex = (currentMaskIndex + 1) % ownedMasks.Count;
             Debug.Log(GetCurrentMask());
-            AnimationDirectionCheck("MaskSwitch");
+            Debug.Log(currentMaskIndex);
+            
         }
+
+        AnimationDirectionCheck("MaskSwitch");
     }
 
     void OnClick(InputAction.CallbackContext context)
@@ -307,20 +304,18 @@ public class PlayerController : MonoBehaviour
 
             case "MaskSwitch":
 
-                isAnimating = true; // Disable movement during animation
-
                 if (GetCurrentMask() == MaskType.Detective) // jason mask
                 {
-                    animator.SetFloat("WutMask", 1); // jason mask
-                    animator.SetTrigger("Mask");
-                    OnAnimationEnd();
+                    Debug.Log("Detective Mask active");
+                    animator.SetTrigger("Clue");
                 }
+
                 else if (GetCurrentMask() == MaskType.Ghost) // ghost mask
                 {
-                    animator.SetFloat("WutMask", 0); // ghost mask
-                    animator.SetTrigger("Mask");
-                    OnAnimationEnd();
+                    Debug.Log("Ghost Mask active");
+                    animator.SetTrigger("Ghost");
                 }
+
                 break;
 
             default:
@@ -328,10 +323,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnAnimationEnd()
-    {
-        isAnimating = false;
-    }
+  
 
 
 
