@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
         return ownedMasks[currentMaskIndex];
     }
 
-    void ObtainMask(MaskType mask)
+    public void ObtainMask(MaskType mask)
     {
         if (ownedMasks[0] == MaskType.None)
         {
