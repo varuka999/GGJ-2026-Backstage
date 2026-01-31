@@ -339,16 +339,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 6625933641491656056}
     m_Modifications:
     - target: {fileID: 2151523165161254770, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
-      propertyPath: lengthInSec
-      value: 0.5
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 2151523165161254770, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
-      propertyPath: playOnAwake
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 2151523165161254770, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2151523165161254770, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2151523165161254770, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.05
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.061599493
       objectReference: {fileID: 0}
     - target: {fileID: 5049925613930141461, guid: 999cff140c5ba0a42a64fe05aa1f0034, type: 3}
       propertyPath: m_Name
