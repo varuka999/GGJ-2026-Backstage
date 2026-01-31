@@ -260,12 +260,13 @@ public class PlayerController : MonoBehaviour
             currentMaskIndex = (currentMaskIndex + 1) % ownedMasks.Count;
             AnimationDirectionCheck("MaskSwitch");
         }
+
+        ChangeMaskOnPickup(mask);
     }
 
-    public void ChangeMaskOnPickup(MaskType mask)
+    private void ChangeMaskOnPickup(MaskType mask)
     {
-        currentMaskIndex = (int)mask;
-        UIManager.Instance.UpdateControlsText(currentMaskIndex);
+        UIManager.Instance.UpdateControlsText(mask);
         AnimationDirectionCheck("MaskSwitch");
     }
 
@@ -275,9 +276,9 @@ public class PlayerController : MonoBehaviour
         {
             ChangeDetectiveMode(false);
 
-            int tempIndex = currentMaskIndex;//
+            int tempIndex = currentMaskIndex;
             currentMaskIndex = (currentMaskIndex + 1) % ownedMasks.Count;
-            if (currentMaskIndex == tempIndex)//
+            if (currentMaskIndex == tempIndex)
             {
                 return;
             }
@@ -285,7 +286,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log(GetCurrentMask());
             Debug.Log(currentMaskIndex);
 
-            UIManager.Instance.UpdateControlsText(currentMaskIndex);
+            UIManager.Instance.UpdateControlsText(GetCurrentMask());
         }
 
         AnimationDirectionCheck("MaskSwitch");
