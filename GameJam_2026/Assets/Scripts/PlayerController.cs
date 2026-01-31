@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
         this.transform.gameObject.SetActive(true);
 
         //just for testing
-        ObtainMask(MaskType.Ghost);
-        ObtainMask(MaskType.Detective);
+        //ObtainMask(MaskType.Ghost);
+        //ObtainMask(MaskType.Detective);
 
         GameObject cinemachine = Instantiate(cinemachinePrefab);
         cinemachine.GetComponent<CinemachineCamera>().Follow = this.transform; // Set camera to follow the player
