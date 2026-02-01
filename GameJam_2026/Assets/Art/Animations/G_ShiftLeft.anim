@@ -59,7 +59,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: SFX_Dash
+    path: SFX_Holder/SFX_Dash
     classID: 82
     script: {fileID: 0}
     flags: 0
@@ -107,7 +107,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3654685869
+      path: 737417686
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 82
@@ -258,7 +258,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: SFX_Dash
+    path: SFX_Holder/SFX_Dash
     classID: 82
     script: {fileID: 0}
     flags: 0

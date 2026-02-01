@@ -43,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: SFX_Player
+    path: SFX_Holder/SFX_Player
     classID: 82
     script: {fileID: 0}
     flags: 0
@@ -75,7 +75,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1627947117
+      path: 3547508431
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 82
@@ -146,7 +146,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: SFX_Player
+    path: SFX_Holder/SFX_Player
     classID: 82
     script: {fileID: 0}
     flags: 0
