@@ -22,6 +22,13 @@ public class RandomizeOrderClue : Clue
     [SerializeField] bool isMain;
     [SerializeField] List<RandomizeOrderClue> allClues;
     [SerializeField] List<GameObject> toggleObjects;
+
+    protected override void Start()
+    {
+        base.Start();
+        ResetAllClues();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -83,6 +90,7 @@ public class RandomizeOrderClue : Clue
         {
             clue.failed = false;
             clue.SetActive(true);
+            clue.material = GetComponent<SpriteRenderer>().material;
             clue.StartHighlight();
             clue.pressed = false;
             if(clue.isLast)

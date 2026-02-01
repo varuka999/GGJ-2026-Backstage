@@ -19,7 +19,7 @@ public abstract class Clue : MonoBehaviour
     
     [SerializeField] bool nonInteractible = false;
 
-    bool revealed = false;
+    protected bool revealed = false;
     
     [SerializeField] bool revealWhenActive = false;
 
