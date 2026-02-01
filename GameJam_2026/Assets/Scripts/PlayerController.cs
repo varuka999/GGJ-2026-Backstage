@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
                     hit = true;
                 }
             }
-            if (hit)
+            if (!hit)
             {
                 //start dash
                 AnimationDirectionCheck("Dash");
