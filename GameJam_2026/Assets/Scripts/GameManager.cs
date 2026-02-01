@@ -1,14 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     static GameManager instance = null;
-    static public GameManager Instance {get {return instance;}}
+    static public GameManager Instance { get { return instance; } }
 
     [SerializeField] private GameObject uiManagerPrefab = null;
     [SerializeField] private GameObject cinemachinePrefab = null;
     [SerializeField] private GameObject playerPrefab = null;
     [SerializeField] private Transform playerSpawnTransform = null;
+    [SerializeField] private List<MaskType> startingMasks;
+
+    [SerializeField] private Texture2D detectiveCursorTexture = null;
 
     bool detectiveView = false;
 
@@ -27,13 +31,17 @@ public class GameManager : MonoBehaviour
         GameObject player = Instantiate(playerPrefab, playerSpawnTransform.position, Quaternion.identity);
         player.SetActive(false);
         player.GetComponent<PlayerController>().Initialize(cinemachinePrefab);
+        foreach (MaskType mask in startingMasks)
+        {
+            player.GetComponent<PlayerController>().ObtainMask(mask);
+        }
     }
 
     void Start()
     {
         SetGlobalMaterial();
         Interactible[] interactibles = FindObjectsByType<Interactible>(FindObjectsSortMode.None);
-        foreach(Interactible interactible in interactibles)
+        foreach (Interactible interactible in interactibles)
         {
             interactible.InitMaterial();
         }
@@ -48,6 +56,12 @@ public class GameManager : MonoBehaviour
     {
         detectiveView = view;
         Grayscale(detectiveView);
+        ToggleDetectiveCursor(view);
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ToggleClueText(view);
+        }
     }
 
     void SetGlobalMaterial()
@@ -74,11 +88,24 @@ public class GameManager : MonoBehaviour
     void Grayscale(bool value)
     {
         int saturation = 0;
-        if(value)
+        if (value)
         {
             saturation++;
         }
 
-        material.SetInt("_Saturation",saturation);
+        material.SetInt("_Saturation", saturation);
+    }
+
+    private void ToggleDetectiveCursor(bool view)
+    {
+        if (view)
+        {
+            Vector2 cursorHotspot = new Vector2(12.0f, 12.0f);
+            Cursor.SetCursor(detectiveCursorTexture, cursorHotspot, CursorMode.Auto);
+        }
+        else
+        {
+            Cursor.SetCursor(null, new Vector2(1.0f, 1.0f), CursorMode.Auto);
+        }
     }
 }
