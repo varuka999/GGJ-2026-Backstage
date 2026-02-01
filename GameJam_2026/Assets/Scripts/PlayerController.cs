@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private Animator animator = null;
     private BoxCollider2D box = null;
 
-
     private Vector3 animatorDirection = Vector2.down;
     private List<Interactible> interactibles = new List<Interactible>();
 
@@ -42,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashDistance = 3.5f;
     [SerializeField] float dashSpeed = 12.0f;
     private Vector3 dashDestination = new Vector3(0, 0, -1);
+
+    private bool isChangingMask = false;
 
     // particle stuff 
     [SerializeField] private ParticleSystem maskChangeVFX;
@@ -130,6 +131,10 @@ public class PlayerController : MonoBehaviour
                 rb.simulated = true;
             }
         }
+        else if (isChangingMask)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
         else if (inDetectiveMode)
         {
             // Detective code
@@ -185,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
         if (interacted)
         {
-          AnimationDirectionCheck("Interact");
+            AnimationDirectionCheck("Interact");
         }
     }
 
@@ -272,7 +277,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCycleMask(InputAction.CallbackContext context)
     {
-        if (!IsDashing())
+        if (!IsDashing() && !isChangingMask)
         {
             ChangeDetectiveMode(false);
 
@@ -287,9 +292,9 @@ public class PlayerController : MonoBehaviour
             Debug.Log(currentMaskIndex);
 
             UIManager.Instance.UpdateControlsText(GetCurrentMask());
-        }
 
-        AnimationDirectionCheck("MaskSwitch");
+            AnimationDirectionCheck("MaskSwitch");
+        }
     }
 
     void OnClick(InputAction.CallbackContext context)
@@ -392,5 +397,8 @@ public class PlayerController : MonoBehaviour
         UIManager.Instance.ToggleUIControls(currentMaskIndex);
     }
 
-
+    private void UpdateChangingMask()
+    {
+        isChangingMask = !isChangingMask;
+    }
 }
