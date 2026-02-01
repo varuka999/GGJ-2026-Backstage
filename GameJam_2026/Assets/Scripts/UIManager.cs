@@ -51,16 +51,16 @@ public class UIManager : MonoBehaviour
         uiControlsParent.SetActive(!uiControlsParent.activeSelf);
     }
 
-    public void UpdateControlsText(int maskIndex)
+    public void UpdateControlsText(MaskType mask)
     {
         Debug.Log("updated controls text");
         abilityText.text = "(Space) ";
-        switch (maskIndex)
+        switch (mask)
         {
-            case 0:
+            case MaskType.Detective:
                 abilityText.text += "Detective Vision";
                 break;
-            case 1:
+            case MaskType.Ghost:
                 abilityText.text += "Ghost Dash";
                 break;
             default:
